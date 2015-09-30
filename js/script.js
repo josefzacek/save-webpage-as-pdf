@@ -1,10 +1,20 @@
 jQuery(function($) {
-  $(".save-as-pdf").on('click', function(){
-    var file_name = $('title').text();
+  $('.save-as-pdf').click(function () {
     var doc = new jsPDF();
-    doc.fromHTML($('body').get(0), 15, 15, {
-        'width': 170
+    var file_name = $('title').text();
+
+
+    var specialElementHandlers = {
+      '#ignorePDF': function (element, renderer) {
+        return true;
+      }
+    };
+
+    doc.fromHTML($('.container').html(), 15, 15, {
+      'width': 170,
+      'elementHandlers': specialElementHandlers
     });
+
     doc.save(file_name + ".pdf");
-});
+  });
 });
